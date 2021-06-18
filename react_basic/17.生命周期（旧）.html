@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test">
+
+  </div>
+  <script type='text/javascript' src='./js/react.development.js'></script>
+  <script type='text/javascript' src='./js/react-dom.development.js'></script>
+  <script type='text/javascript' src="./js/babel.min.js"></script>
+
+  <script type='text/babel'>
+    class Count extends React.Component {
+
+      constructor(props){
+        console.log('Count---constructor')
+        super(props)
+        this.state = {count:0}
+      }
+
+      add = ()=>{
+        this.setState({count:this.state.count+1})
+      }
+      death = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+      }
+      // 组件强制更新 即使状态不发生改变也更新
+      update = () => {
+        this.forceUpdate()
+      }
+      // 组件将要挂载（调用一次）
+      componentWillMount(){
+        console.log('Count---componentWillMount')
+      }
+      // 组件挂载后（调用一次）
+      componentDidMount(){
+        console.log('Count---componentDidMount')
+      }
+      // 组件卸载前（调用一次）
+      componentWillUnmount(){
+        console.log('Count---componentWillUnmount')
+      }
+
+      // 组件初次渲染+状态发生改变（1+n次）
+      render(){
+        console.log('Count---render')
+        return (
+          <div>
+            <h1>当前的计数:{this.state.count}</h1>
+            <button onClick={this.add}>点击+1</button>
+            <button onClick={this.death}>Count组件销毁</button>
+            <button onClick={this.update}>Count组件强制更新</button>
+          </div>
+        )
+      }
+      // 每次状态更新都会询问这个函数返回的布尔值，是真就允许更新(强制更新不会走这一步)
+      shouldComponentUpdate(){
+        console.log('Count---shouldComponentUpdate')
+        return true
+      }
+      // 状态更新前
+      componentWillUpdate(){
+        console.log('Count---componentWillUpdate')
+      }
+      // 状态更新后  
+      componentDidUpdate(){
+        console.log('Count--- componentDidUpdate')
+      }
+    }
+    
+    // 父子组件
+    class Father extends React.Component {
+      state = {car:'奔驰'}
+      changeCar = () => {
+        this.setState({car:'奥拓'})
+      }
+      render() {
+        return (
+          <div>
+            <h2>父组件</h2>
+            <button onClick={this.changeCar}>点击换车</button>
+            <Son car={this.state.car}/>
+          </div>
+        )
+      }
+    }
+
+    class Son extends React.Component {
+      render() {
+        console.log('Son---render')
+        return <h2>子组件:{this.props.car}</h2>
+      }
+      // 组件将要接收新的props时调用，注意：初次渲染不调用
+      componentWillReceiveProps(props){
+        console.log('Son---componentWillReceiveProps',props)
+      }
+
+      shouldComponentUpdate(){
+        console.log('Son---shouldComponentUpdate')
+        return true
+      }
+      // 状态更新前
+      componentWillUpdate(){
+        console.log('Son---componentWillUpdate')
+      }
+      // 状态更新后  
+      componentDidUpdate(){
+        console.log('Son--- componentDidUpdate')
+      }
+    }
+
+    ReactDOM.render(<Father/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

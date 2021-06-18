@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="test">
+
+  </div>
+
+  <div id="test1">
+
+  </div>
+
+  <div id="test2">
+
+  </div>
+
+  <div id="test3">
+    
+  </div>
+
+  <script type='text/javascript' src='./js/react.development.js'></script>
+  <!-- ¿©’πø‚“¿¿µ∫À–ƒø‚ -->
+  <script type='text/javascript' src='./js/react-dom.development.js'></script>
+  <script type='text/javascript' src="./js/babel.min.js"></script>
+
+
+  <script type='text/babel'>
+    // 1.¥¥Ω®–Èƒ‚DOM
+    const obj = {
+      firstName:'aaa',
+      lastName:'bbb',
+      a:1,
+      b:2,
+    }
+    const VDOM = <h1>hello,world {obj.firstName+' '+obj.lastName} {obj.a+obj.b}</h1>
+    // 2.‰÷»æ–Èƒ‚DOMµΩ“≥√Ê
+    ReactDOM.render(VDOM, document.getElementById('test'))
+  </script>
+
+  <script>
+    const VDOM1 = '<h1><span>hello,world</span></h1>'
+    const test1 = document.getElementById('test1')
+    test1.innerHTML = VDOM1
+  </script>
+
+  <script>
+    const VDOM2 = React.createElement('h1',{id:'aaa'},'hello,world')
+    ReactDOM.render(VDOM2, document.getElementById('test2'))
+  </script>
+
+  <script  type='text/babel'>
+    function fn(a){
+      if(a == 1){
+        return <h1>aaaaaaaaaaaaaa</h1>
+      }else {
+        return <h2>bbbbbbbbbbbb</h2>
+      }
+    }
+
+    ReactDOM.render(fn(2),document.getElementById('test3'))
+
+  </script>
+</body>
+
+</html>

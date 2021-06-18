@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test">
+
+  </div>
+
+  <script type='text/javascript' src='./js/react.development.js'></script>
+  <script type='text/javascript' src='./js/react-dom.development.js'></script>
+  <script type='text/javascript' src="./js/babel.min.js"></script>
+
+  <script type='text/babel'>
+    // 重点：类里面直接写赋值语句如 a = 1 ，会直接在实例对象上挂载a属性值为1
+    class MyComponent extends React.Component {
+      
+      state = { weather:false }
+      
+      render(){ 
+        return <h1 onClick={this.changeWeather}>今天是{this.state.weather ? '晴天':'雨天'}</h1>
+      }
+      // 此时必须写成箭头函数
+      changeWeather = () =>{ 
+        console.log(this.state.weather)
+        this.setState({weather: !this.state.weather}) 
+      }
+    }
+
+    ReactDOM.render(<MyComponent/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

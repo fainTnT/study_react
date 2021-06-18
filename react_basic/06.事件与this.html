@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test">
+
+  </div>
+
+  <script type='text/javascript' src='./js/react.development.js'></script>
+  <script type='text/javascript' src='./js/react-dom.development.js'></script>
+  <script type='text/javascript' src="./js/babel.min.js"></script>
+
+  <script type='text/babel'>
+    class MyComponent extends React.Component {
+      constructor(props){
+        super(props)
+        this.state = { weather:false }
+        this.changeWeather = this.changeWeather.bind(this) 
+        // 3.相当于重新生成了一个changeWeather方法挂载在实例对象本身,并且把this指向实例对象
+      }
+      render(){ 
+        return <h1 onClick={this.changeWeather}>今天是{this.state.weather ? '晴天':'雨天'}</h1>
+        // 4.这里changeWeather会先找到在实例对象本身上的方法
+        // 5.注意方法要用驼峰,方法不要直接加()
+      }
+      changeWeather(){ 
+        console.log(this.state.weather)
+        // 6.切记不能直接修改state里面的值,要通过setState
+        // !this.state.weather
+        this.setState({weather: !this.state.weather}) 
+      }
+      // 1.这里的方法是在原型对象上
+      // 2.如果直接通过事件调用这里的方法，则this是undefined(class默认开启严格模式，让this是undefined不是window)
+    }
+
+    ReactDOM.render(<MyComponent/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

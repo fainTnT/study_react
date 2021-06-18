@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 引入新版本react -->
+  <div id="test">
+
+  </div>
+  <script type='text/javascript' src='./js/new/react.development.js'></script>
+  <script type='text/javascript' src='./js/new/react-dom.development.js'></script>
+  <script type='text/javascript' src="./js/new/babel.min.js"></script>
+
+  <script type='text/babel'>
+    class Count extends React.Component {
+
+      constructor(props){
+        console.log('Count---constructor')
+        super(props)
+        this.state = {count:0}
+      }
+
+      add = ()=>{
+        this.setState({count:this.state.count+1})
+      }
+      death = () => {
+        ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+      }
+      update = () => {
+        this.forceUpdate()
+      }
+       // 官方建议移除
+      // componentWillMount(){
+      //   console.log('Count---componentWillMount')
+      // }
+
+      // 新增
+      // 若state的值在任何时候都取决于props，那就可以使用这个
+      static getDerivedStateFromProps(props,state){
+        console.log('Count---getDerivedStateFromProps',props,state)
+        return null // 返回值必须是state对象或null
+      }
+
+      // 新增
+      // 在更新前获取快照，自定义获取一些更新前的信息
+      getSnapshotBeforeUpdate(){
+        console.log('Count---getSnapshotBeforeUpdate')
+        return '更新前信息'
+        // 返回值交给componentDidUpdate的第三个参数
+      }
+      componentDidMount(){
+        console.log('Count---componentDidMount')
+      }
+      componentWillUnmount(){
+        console.log('Count---componentWillUnmount')
+      }
+
+      render(){
+        console.log('Count---render')
+        return (
+          <div>
+            <h1>当前的计数:{this.state.count}</h1>
+            <button onClick={this.add}>点击+1</button>
+            <button onClick={this.death}>Count组件销毁</button>
+            <button onClick={this.update}>Count组件强制更新</button>
+          </div>
+        )
+      }
+      shouldComponentUpdate(){
+        console.log('Count---shouldComponentUpdate')
+        return true
+      }
+      // 官方建议移除
+      // componentWillUpdate(){
+      //   console.log('Count---componentWillUpdate')
+      // }
+      componentDidUpdate(preProps,preState,snapshotValue){
+        console.log('Count--- componentDidUpdate',preProps,preState,snapshotValue)
+      }
+    }
+
+
+
+
+    // 父子组件
+    class Father extends React.Component {
+      state = {car:'奔驰'}
+      changeCar = () => {
+        this.setState({car:'奥拓'})
+      }
+      render() {
+        return (
+          <div>
+            <h2>父组件</h2>
+            <button onClick={this.changeCar}>点击换车</button>
+            <Son car={this.state.car}/>
+          </div>
+        )
+      }
+    }
+
+    class Son extends React.Component {
+      render() {
+        console.log('Son---render')
+        return <h2>子组件:{this.props.car}</h2>
+      }
+      // 官方建议移除
+      // componentWillReceiveProps(props){
+      //   console.log('Son---componentWillReceiveProps',props)
+      // }
+    }
+    
+    ReactDOM.render(<Count/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

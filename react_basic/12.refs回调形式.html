@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test"></div>
+
+  <script type='text/javascript' src='./js/react.development.js'></script>
+  <script type='text/javascript' src='./js/react-dom.development.js'></script>
+  <script type='text/javascript' src="./js/babel.min.js"></script>
+  <script type='text/javascript' src="./js/prop-types.js"></script>
+
+  <script type='text/babel'>
+    class Dome extends React.Component {
+      show1 = () => {
+        console.log(this.ipt1.value)
+      }
+      show2 = () => {
+        console.log(this.ipt2.value)
+      }
+      // react会自动执行ref里面的函数，函数的参数就是这个节点本身
+      // 注意：函数写成箭头函数形式
+      render(){
+        return (
+          <div>
+            <input type="text" onBlur={this.show1} ref={(currentNode)=>{ this.ipt1 = currentNode }}/>
+            <input type="text" onBlur={this.show2} ref={(currentNode)=>{ this.ipt2 = currentNode }}/>
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<Dome/>,document.getElementById('test'))
+  </script>
+</body>
+</html>

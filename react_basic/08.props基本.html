@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <div id="test1"></div>
+  <div id="test2"></div>
+  <div id="test3"></div>
+
+  <script type='text/javascript' src='./js/react.development.js'></script>
+  <script type='text/javascript' src='./js/react-dom.development.js'></script>
+  <script type='text/javascript' src="./js/babel.min.js"></script>
+
+  <script type='text/babel'>
+    class MyCpn extends React.Component{
+      render(){
+        return (
+          <ul>
+            <li>{this.props.name}</li>
+            <li>{this.props.sex}</li>
+            <li>{this.props.age}</li>
+          </ul>
+        )
+      }
+    }
+
+    ReactDOM.render(<MyCpn name='aaa' sex='men' age={18} />,document.getElementById('test1'))
+    ReactDOM.render(<MyCpn name='bbb' sex='women' age={28} />,document.getElementById('test2'))
+    // 简写
+    const p = {name:'ccc',sex:'men',age:38}
+    ReactDOM.render(<MyCpn {...p}/>,document.getElementById('test3'))
+  </script>
+
+  <script>
+    var obj1 = {name:'aaa',age:12,c:{d:10}} 
+    var obj2 = {...obj1}
+    obj2.name = 'bbb'
+    console.log(obj1,obj2)
+    var obj3 = {...obj1,age:22,sex:'men'}
+    console.log(obj3)
+    obj3.c.d = 20
+    console.log(obj1,obj3)
+
+    // 结论：{...obj} 只可以深克隆对象的第一层属性，可以设置属性覆盖原对象的属性
+  </script>
+</body>
+</html>
